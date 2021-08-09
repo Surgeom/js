@@ -1,3 +1,28 @@
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+function makeGETRequest(url) {
+    return new Promise((resolve, reject) => {
+        var xhr;
+
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        if (true) {
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    resolve(xhr.responseText);
+                }
+            }
+        } else {
+            reject("Ошибка")
+        }
+        xhr.open('GET', url, true);
+        xhr.send();
+    })
+}
+
 class GoodsItem {
     constructor(title, price) {
         this.title = title;
@@ -16,18 +41,17 @@ class GoodsList {
     constructor() {
         this.goods = [];
     }
-    fetchGoods() {
-        this.goods = [
-            { title: 'Shirt', price: 150 },
-            { title: 'Socks', price: 50 },
-            { title: 'Jacket', price: 350 },
-            { title: 'Shoes', price: 250 },
-        ];
+    fetchGoods(cb) {
+        makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
+            this.goods = JSON.parse(goods);
+            console.log(this.goods)
+            cb();
+        })
     }
     render() {
         let listHtml = '';
         this.goods.forEach(good => {
-            const goodItem = new GoodsItem(good.title, good.price);
+            const goodItem = new GoodsItem(good.product_name, good.price);
             listHtml += goodItem.render();
         });
         document.querySelector('.goods-list').innerHTML = listHtml;
@@ -46,17 +70,21 @@ class Basket {
     additem(item) {
         this.items.additem(item)
     }
+    removeitem(item) {
+        this.items.splice(this.items.indexOf(item), 1)
+    }
+    basketlist() {
+        return this.items
+    }
 }
 
 class BasketItem {
-    remove_from_basket() {
-    }
-
+    pass
 }
 
 
 
 const list = new GoodsList();
-list.fetchGoods();
-list.render();
-console.log(list.items_sum())
+list.fetchGoods(() => {
+    list.render();
+});
