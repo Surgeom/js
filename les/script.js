@@ -1,5 +1,6 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
+
 function makeGETRequest(url) {
     return new Promise((resolve, reject) => {
         var xhr;
@@ -23,6 +24,7 @@ function makeGETRequest(url) {
     })
 }
 
+
 class GoodsItem {
     constructor(title, price) {
         this.title = title;
@@ -40,17 +42,20 @@ function sum(arr) {
 class GoodsList {
     constructor() {
         this.goods = [];
+        this.filteredGoods = [];
     }
     fetchGoods(cb) {
         makeGETRequest(`${API_URL}/catalogData.json`).then((goods) => {
             this.goods = JSON.parse(goods);
             console.log(this.goods)
+            this.filteredGoods = JSON.parse(goods);
+            console.log(this.filteredGoods)
             cb();
         })
     }
     render() {
         let listHtml = '';
-        this.goods.forEach(good => {
+        this.filteredGoods.forEach(good => {
             const goodItem = new GoodsItem(good.product_name, good.price);
             listHtml += goodItem.render();
         });
@@ -59,6 +64,12 @@ class GoodsList {
     items_sum() {
         return sum(this.goods.map(function (a) { return a.price; }))
     }
+    filterGoods(value) {
+        const regexp = new RegExp(value, 'i');
+        this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
+        this.render();
+    }
+
 }
 
 
@@ -87,4 +98,9 @@ class BasketItem {
 const list = new GoodsList();
 list.fetchGoods(() => {
     list.render();
+});
+
+searchButton.addEventListener('click', (e) => {
+    const value = document.search.bsearch.value;
+    list.filterGoods(value);
 });
