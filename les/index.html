@@ -1,38 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script async src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+
     <title>eShop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <div class="nav_menu">
+    <div id="app">
+        <header>
+            <div class="nav_menu">
 
-            <nav class="navbar navbar-light bg-light">
-                <div class="container-fluid">
-                    <button class=" btn  btn-primary cart-button" type="button">Корзина</button>
-                    <form class="d-flex" name="search">
-                        <input class="form-control me-2 goods-search" type="search" placeholder="Поиск"
-                            aria-label="Search" name="bsearch">
-                        <button class="btn btn-outline-success search-button" type="button"
-                            id='searchButton'>Искать</button>
-                    </form>
+                <nav class="navbar navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div class="dropdown">
+                            <button class="btn btn-primary cart-button dropdown-toggle" type="button"
+                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Корзина
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+
+                        <form class="d-flex" name="search">
+                            <input class="form-control me-2 goods-search" type="search" placeholder="Поиск"
+                                aria-label="Search" v-model="searchLine">
+                            <button class="btn btn-outline-success search-button" type="button"
+                                @click="ButtonSearchClick">Искать</button>
+                        </form>
+                    </div>
+                </nav>
+
+            </div>
+
+
+
+        </header>
+        <main>
+            <div class="goods-list">
+                <div class="goods-item" v-for="good in filteredGoods">
+                    <h3>{{ good.product_name }}</h3>
+                    <p>{{ good.price }}</p>
                 </div>
-            </nav>
-
-        </div>
-
-
-
-    </header>
-    <main>
-        <div class="goods-list"></div>
+            </div>
+    </div>
     </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script async src="script.js"></script>
 </body>
 
 
