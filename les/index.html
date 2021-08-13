@@ -2,14 +2,33 @@
 <html>
 
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script async src="script.js"></script>
     <title>eShop</title>
     <link rel="stylesheet" href="style.css">
-    <script async src="script.js"></script>
 </head>
 
 <body>
     <header>
-        <button class="cart-button" type="button">Корзина</button>
+        <div class="nav_menu">
+
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <button class=" btn  btn-primary cart-button" type="button">Корзина</button>
+                    <form class="d-flex" name="search">
+                        <input class="form-control me-2 goods-search" type="search" placeholder="Поиск"
+                            aria-label="Search" name="bsearch">
+                        <button class="btn btn-outline-success search-button" type="button"
+                            id='searchButton'>Искать</button>
+                    </form>
+                </div>
+            </nav>
+
+        </div>
+
+
+
     </header>
     <main>
         <div class="goods-list"></div>
