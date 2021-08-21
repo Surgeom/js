@@ -26,20 +26,18 @@
                                 Корзина
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#basket">Открыть корзину</a></li>
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </div>
 
-                        <form class="d-flex" name="search">
-                            <input class="form-control me-2 goods-search" type="search" placeholder="Поиск"
-                                aria-label="Search" v-model="searchLine">
-                            <button class="btn btn-outline-success search-button" type="button"
-                                @click="ButtonSearchClick">Искать</button>
-                        </form>
+                        <search></search>
                     </div>
                 </nav>
+                <div id="basket">
+                    <basket></basket>
+                </div>
 
             </div>
 
@@ -47,14 +45,8 @@
 
         </header>
         <main>
-            <div class="goods-list">
-                <div class="goods-item" v-for="good in filteredGoods">
-                    <h3>{{ good.product_name }}</h3>
-                    <p>{{ good.price }}</p>
-                </div>
-            </div>
-    </div>
-    </main>
+            <goods-list :goods="filteredGoods"></goods-list>
+        </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script async src="script.js"></script>
